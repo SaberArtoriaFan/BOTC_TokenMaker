@@ -1,0 +1,79 @@
+{
+  "json_path": "Json",
+  "output_dir": "tokens_output",
+  "dpi": 350,
+  "timeout": 15,
+  "token_diameter_inch": 1.0,
+  "show_cut_guide": false,
+  "canvas_padding": 0,
+  
+  "background": {
+    "type": "image", 
+    "color": [0, 0, 0], 
+    "image_path": "RonpONN2.png" 
+  },
+
+  "image": {
+    "scale": 0.825,
+    "y_offset_ratio": -0.05
+  },
+
+  "cut_guide": {
+    "color": [0, 255, 0],
+    "width": 3,
+    "padding": 27
+  },
+
+  "font": {
+    "path": "fonts/HWXW.ttf",
+    "size": 38
+  },
+  "strict": true,
+  "text": {
+    "use_gradient": true,
+    "gradient_blue": {
+      "type": "linear",
+      "colors": [
+        [34, 220, 253],
+        [88, 101, 185]
+      ],
+      "positions": [0.0, 1.0],
+      "angle": 90
+    },
+    "gradient_red": {
+      "type": "linear",
+      "colors": [
+        [220, 41, 41],
+        [104,4,14]
+      ],
+      "positions": [0.0, 1.0],
+      "angle": 90
+    },
+    "colors": {
+      "blue": [46, 196, 230],
+      "red": [255, 77, 79],
+      "neutral": [255, 235, 80]
+    },
+    "stroke": {
+      "color": [0, 0, 0],
+      "width": 2
+    },
+    "inner_shadow": {
+      "offset_y": -1,
+      "alpha": 38
+    },
+    "use_curve": false,
+    "line": {
+      "spacing": 6,
+      "char_y": 0.78,
+      "offset_y": 0.03
+    },
+    "curve": {
+      "radius_ratio": 0.38,
+      "arc_angle_base": 40,
+      "arc_angle_max": 120,
+      "arc_angle_increment": 17
+    },
+    "single_char_y": 0.78
+  }
+}
