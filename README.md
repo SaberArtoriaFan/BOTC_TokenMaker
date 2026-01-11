@@ -81,8 +81,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/BloodOnTheClocktower-TokenMaker.git
-cd BloodOnTheClocktower-TokenMaker
+git clone https://github.com/SaberArtoriaFan/BOTC_TokenMaker.git
+cd BOTC_TokenMaker
 
 # Restore dependencies
 dotnet restore
@@ -826,8 +826,8 @@ This project is licensed under the MIT License.
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/BloodOnTheClocktower-TokenMaker.git
-cd BloodOnTheClocktower-TokenMaker
+git clone https://github.com/SaberArtoriaFan/BOTC_TokenMaker.git
+cd BOTC_TokenMaker
 
 # 恢复依赖
 dotnet restore
