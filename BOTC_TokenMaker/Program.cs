@@ -8,7 +8,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using SkiaSharp;
 
-
+#if DEBUG
+Directory.SetCurrentDirectory(@"D:\Fork\BOTC_TokenMaker\Example");
+#endif
 // ================== 默认配置（会被config.json覆盖）==================
 var DEFAULT_CONFIG = new Dictionary<string, object>
 {
@@ -561,7 +563,7 @@ void CreateSingleToken(SKBitmap image, string name, string schTeam,
                 string ch = name[i].ToString();
                 paint.MeasureText(ch, ref bounds);
 
-                float textX = startX;
+                float textX = startX - bounds.Left;
                 float textY = y - bounds.MidY;
 
                 // 阴影
