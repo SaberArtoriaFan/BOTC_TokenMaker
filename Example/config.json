@@ -6,15 +6,15 @@
   "token_diameter_inch": 1.0,
   "show_cut_guide": false,
   "canvas_padding": 0,
-  
+
   "background": {
-    "type": "image", 
-    "color": [0, 0, 0], 
-    "image_path": "RonpONN2.png" 
+    "type": "image",
+    "color": [ 0, 0, 0 ],
+    "image_path": "RonpONN3.png"
   },
 
   "image": {
-    "scale": 0.825,
+    "scale": 0.8,
     "y_offset_ratio": -0.05
   },
 
@@ -26,7 +26,7 @@
 
   "font": {
     "path": "fonts/HWXW.ttf",
-    "size": 38
+    "size": 37
   },
   "strict": true,
   "text": {
@@ -65,7 +65,7 @@
     "use_curve": false,
     "line": {
       "spacing": 6,
-      "char_y": 0.78,
+      "char_y": 0.80,
       "offset_y": 0.03
     },
     "curve": {
