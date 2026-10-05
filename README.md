@@ -46,16 +46,19 @@ npm run build
 
 ### 部署到 Cloudflare Pages
 
-把仓库连接到 Cloudflare Pages，并使用以下设置：
+把仓库连接到 Cloudflare Pages，选择 **GitHub 集成** 并导入本仓库，然后使用以下设置：
 
 | 设置 | 值 |
 | --- | --- |
-| Framework preset | Vite |
+| Production branch | `main` |
+| Framework preset | `None` / `No framework`（不要选择 VitePress） |
 | Build command | `npm run build` |
 | Build output directory | `dist` |
-| Root directory | `/` |
+| Root directory | 留空（仓库根目录） |
 
-`functions/api/image.js` 会被 Pages 自动识别为 Function，不需要额外配置 Worker。仓库中的 `wrangler.toml` 也可用于 Wrangler 部署。
+本项目使用原生 Vite，但不依赖 Cloudflare 的框架预设；构建命令和输出目录手动填写即可。VitePress 是另一个文档框架，不适用于本项目。
+
+`functions/api/image.js` 会被 Pages 自动识别为 Function，不需要额外配置 Worker。首次部署完成后，后续推送到 `main` 分支会自动触发新的生产部署。仓库中的 `wrangler.toml` 也可用于 Wrangler 部署。
 
 ---
 
