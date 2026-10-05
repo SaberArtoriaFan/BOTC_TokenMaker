@@ -65,7 +65,12 @@
               <summary>角色图像 <span>02</span></summary>
               <label class="range-field"><span>图像尺寸 <output id="imageScaleOut">80%</output></span><input id="imageScale" type="range" min="35" max="110" value="80" /></label>
               <label class="range-field"><span>垂直位置 <output id="imageOffsetOut">−5%</output></span><input id="imageOffset" type="range" min="-35" max="35" value="-5" /></label>
-              <label>背景<select id="backgroundType"><option value="transparent">透明</option><option value="color">纯色</option><option value="image">自定义图片</option></select></label>
+              <label>背景<select id="backgroundType"><option value="transparent">透明</option><option value="color">纯色</option><option value="preset-parchment">内置 · 羊皮纸纹章</option><option value="preset-frame">内置 · 圆形边框</option><option value="image">自定义图片</option></select></label>
+              <div class="background-preset-label"><span>内置背景</span><small>点击即可使用</small></div>
+              <div class="background-presets">
+                <button type="button" data-background="preset-parchment" title="使用羊皮纸纹章背景"><img src="/backgrounds/RonpONN.png" alt="羊皮纸纹章背景" /><span>羊皮纸纹章</span></button>
+                <button type="button" data-background="preset-frame" title="使用圆形边框背景"><img src="/backgrounds/RonpONN2.png" alt="圆形边框背景" /><span>圆形边框</span></button>
+              </div>
               <div class="inline-setting" id="backgroundColorRow"><span>背景颜色</span><input id="backgroundColor" type="color" value="#f0eadc" /></div>
               <label class="file-chip" id="backgroundImageRow">上传背景图<input id="backgroundInput" type="file" accept="image/*" hidden /></label>
             </details>

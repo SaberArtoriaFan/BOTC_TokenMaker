@@ -5,6 +5,10 @@ const GOOD_TEAMS = new Set(['townsfolk', 'outsider', '镇民', '外来者']);
 const EVIL_TEAMS = new Set(['minion', 'demon', '爪牙', '恶魔']);
 const CORE_TEAMS = new Set([...GOOD_TEAMS, ...EVIL_TEAMS]);
 const TEAM_LABELS = { townsfolk: '镇民', outsider: '外来者', minion: '爪牙', demon: '恶魔', traveler: '旅行者', fabled: '传奇角色', other: '其他', 镇民: '镇民', 外来者: '外来者', 爪牙: '爪牙', 恶魔: '恶魔' };
+const BACKGROUND_PRESETS = {
+  'preset-parchment': '/backgrounds/RonpONN.png',
+  'preset-frame': '/backgrounds/RonpONN2.png'
+};
 
 const defaults = {
   diameter: 1, dpi: 350, padding: 0, imageScale: .8, imageOffset: -.05,
@@ -153,8 +157,9 @@ async function renderToken(canvas, token, exportMode = false) {
   const ctx = canvas.getContext('2d'); ctx.clearRect(0, 0, targetFull, targetFull);
 
   if (state.settings.backgroundType === 'color') { ctx.fillStyle = state.settings.backgroundColor; ctx.fillRect(pad, pad, content, content); }
-  if (state.settings.backgroundType === 'image' && state.settings.backgroundImage) {
-    try { const bg = await fetchImage(state.settings.backgroundImage); ctx.drawImage(bg, pad, pad, content, content); } catch { /* transparent fallback */ }
+  const backgroundSource = BACKGROUND_PRESETS[state.settings.backgroundType] || (state.settings.backgroundType === 'image' ? state.settings.backgroundImage : null);
+  if (backgroundSource) {
+    try { const bg = await fetchImage(backgroundSource); ctx.drawImage(bg, pad, pad, content, content); } catch { /* transparent fallback */ }
   }
 
   const circle = content * state.settings.imageScale;
@@ -232,6 +237,7 @@ function updateOutputs() {
   $('#guidePaddingOut').value = `${state.settings.guidePadding} px`;
   $('#backgroundColorRow').classList.toggle('is-hidden', state.settings.backgroundType !== 'color');
   $('#backgroundImageRow').classList.toggle('is-hidden', state.settings.backgroundType !== 'image');
+  $$('.background-presets button').forEach((button) => button.classList.toggle('active', button.dataset.background === state.settings.backgroundType));
   $$('.curve-only').forEach((el) => el.classList.toggle('is-hidden', state.settings.layout !== 'curve'));
 }
 
@@ -289,6 +295,7 @@ function bindEvents() {
   refs.dropzone.addEventListener('drop', (e) => loadFiles([...e.dataTransfer.files].filter((file) => file.name.endsWith('.json'))));
   Object.values(controls).forEach((control) => { control.addEventListener('input', updateSettings); control.addEventListener('change', updateSettings); });
   $$('.segmented button').forEach((button) => button.addEventListener('click', () => { state.settings.layout = button.dataset.layout; syncControls(); rerenderDebounced(); }));
+  $$('.background-presets button').forEach((button) => button.addEventListener('click', () => { controls.backgroundType.value = button.dataset.background; updateSettings(); }));
   $('#backgroundInput').addEventListener('change', (e) => { const file = e.target.files[0]; if (!file) return; if (state.settings.backgroundImage?.startsWith('blob:')) URL.revokeObjectURL(state.settings.backgroundImage); state.settings.backgroundImage = URL.createObjectURL(file); rerenderDebounced(); });
   $('#fontInput').addEventListener('change', async (e) => { const file = e.target.files[0]; if (!file) return; try { const family = `CustomTokenFont-${Date.now()}`; const face = new FontFace(family, await file.arrayBuffer()); await face.load(); document.fonts.add(face); state.settings.fontFamily = family; rerenderDebounced(); showToast(`已载入字体：${file.name}`); } catch { showToast('字体载入失败'); } });
   $('#resetBtn').addEventListener('click', () => { state.settings = { ...defaults }; syncControls(); applyFilter(); renderGrid(); showToast('已恢复默认参数'); });
