@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#19130f" />
+    <meta name="description" content="在浏览器中把《血染钟楼》剧本 JSON 转换为可打印的角色 Token。" />
+    <title>BOTC TokenMaker</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="返回首页">
+          <span class="brand-mark" aria-hidden="true">☾</span>
+          <span><b>BOTC TokenMaker</b><small>BLOOD ON THE CLOCKTOWER</small></span>
+        </a>
+        <div class="top-actions">
+          <button class="ghost-button" id="loadDemoBtn" type="button">载入示例</button>
+          <button class="primary-button" id="downloadAllBtn" type="button" disabled>
+            <span>下载全部</span><kbd>ZIP</kbd>
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" id="hero">
+          <p class="eyebrow">BLOOD ON THE CLOCKTOWER</p>
+          <p class="hero-copy">JSON 留在你的浏览器中。上传、微调、预览，然后带走一整套高清 Token。</p>
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="选择或拖入 JSON 文件">
+            <input id="jsonInput" type="file" accept=".json,application/json" multiple hidden />
+            <div class="drop-icon" aria-hidden="true"><span>+</span></div>
+            <div>
+              <strong>拖入剧本 JSON</strong>
+              <p>或点击选择文件 · 支持多选与自动去重</p>
+            </div>
+            <button class="paper-button" type="button" tabindex="-1">选择文件</button>
+          </div>
+          <div class="trust-row">
+            <span>✦ 本地解析</span><span>✦ 无需注册</span><span>✦ 高清 PNG</span><span>✦ 批量 ZIP</span>
+          </div>
+          <div class="creator-note">
+            <span>作者：<strong>说书人Saber</strong></span>
+            <i aria-hidden="true"></i>
+            <span>项目已在 <a href="https://github.com/SaberArtoriaFan/BOTC_TokenMaker" target="_blank" rel="noopener noreferrer">GitHub 开源</a>，欢迎大家使用、提出建议和参与改进。</span>
+          </div>
+        </section>
+
+        <section class="workspace is-hidden" id="workspace" aria-live="polite">
+          <aside class="control-panel">
+            <div class="panel-heading">
+              <div><p class="eyebrow">WORKBENCH</p><h2>Token 设置</h2></div>
+              <button class="icon-button" id="resetBtn" title="恢复默认设置" type="button">↺</button>
+            </div>
+
+            <details open>
+              <summary>尺寸与画布 <span>01</span></summary>
+              <div class="field-grid two-cols">
+                <label>直径（英寸）<input id="diameter" type="number" min="0.5" max="4" step="0.1" value="1" /></label>
+                <label>分辨率（DPI）<select id="dpi"><option>150</option><option selected>350</option><option>600</option></select></label>
+              </div>
+              <label class="range-field"><span>画布留白 <output id="paddingOut">0 px</output></span><input id="padding" type="range" min="0" max="40" value="0" /></label>
+            </details>
+
+            <details open>
+              <summary>角色图像 <span>02</span></summary>
+              <label class="range-field"><span>图像尺寸 <output id="imageScaleOut">80%</output></span><input id="imageScale" type="range" min="35" max="110" value="80" /></label>
+              <label class="range-field"><span>垂直位置 <output id="imageOffsetOut">−5%</output></span><input id="imageOffset" type="range" min="-35" max="35" value="-5" /></label>
+              <label>背景<select id="backgroundType"><option value="transparent">透明</option><option value="color">纯色</option><option value="image">自定义图片</option></select></label>
+              <div class="inline-setting" id="backgroundColorRow"><span>背景颜色</span><input id="backgroundColor" type="color" value="#f0eadc" /></div>
+              <label class="file-chip" id="backgroundImageRow">上传背景图<input id="backgroundInput" type="file" accept="image/*" hidden /></label>
+            </details>
+
+            <details open>
+              <summary>角色名称 <span>03</span></summary>
+              <div class="segmented" role="group" aria-label="文字排列">
+                <button type="button" data-layout="line" class="active">水平</button>
+                <button type="button" data-layout="curve">弧形</button>
+              </div>
+              <label class="range-field"><span>字号 <output id="fontSizeOut">37 px</output></span><input id="fontSize" type="range" min="18" max="100" value="37" /></label>
+              <label class="range-field"><span>文字高度 <output id="textYOut">80%</output></span><input id="textY" type="range" min="55" max="98" value="80" /></label>
+              <label class="range-field curve-only"><span>弧形半径 <output id="curveRadiusOut">38%</output></span><input id="curveRadius" type="range" min="20" max="55" value="38" /></label>
+              <label class="range-field"><span>描边宽度 <output id="strokeWidthOut">2 px</output></span><input id="strokeWidth" type="range" min="0" max="12" value="2" /></label>
+              <div class="inline-setting"><span>自定义字体</span><label class="file-chip compact">选择<input id="fontInput" type="file" accept=".ttf,.otf,font/ttf,font/otf" hidden /></label></div>
+            </details>
+
+            <details>
+              <summary>辅助线与筛选 <span>04</span></summary>
+              <label class="switch-row"><span>显示裁切线<small>导出的 PNG 也会包含</small></span><input id="showGuide" type="checkbox" /><i></i></label>
+              <label class="range-field"><span>裁切线内缩 <output id="guidePaddingOut">27 px</output></span><input id="guidePadding" type="range" min="0" max="80" value="27" /></label>
+              <label class="switch-row"><span>仅保留四大阵营<small>镇民、外来者、爪牙、恶魔</small></span><input id="strictMode" type="checkbox" checked /><i></i></label>
+            </details>
+
+            <button class="secondary-button full" id="addMoreBtn" type="button">＋ 添加更多 JSON</button>
+          </aside>
+
+          <section class="preview-panel">
+            <div class="preview-heading">
+              <div>
+                <p class="eyebrow">LIVE PROOF</p>
+                <h2 id="scriptTitle">未命名剧本</h2>
+                <p><span id="tokenCount">0</span> 枚 Token · <span id="canvasInfo">350 × 350 px</span></p>
+              </div>
+              <div class="view-tools">
+                <button class="icon-button active" data-view="grid" title="网格视图">▦</button>
+                <button class="icon-button" data-view="list" title="列表视图">☷</button>
+              </div>
+            </div>
+            <div class="notice is-hidden" id="notice"></div>
+            <div class="token-grid" id="tokenGrid"></div>
+            <div class="empty-filter is-hidden" id="emptyFilter">当前筛选下没有可生成的角色。</div>
+          </section>
+        </section>
+      </main>
+
+      <div class="editor-drawer" id="editorDrawer" aria-hidden="true">
+        <button class="drawer-backdrop" id="drawerBackdrop" aria-label="关闭编辑器"></button>
+        <aside>
+          <div class="drawer-head"><div><p class="eyebrow">TOKEN EDITOR</p><h2>单枚微调</h2></div><button class="icon-button" id="closeDrawer" type="button">×</button></div>
+          <div class="drawer-preview"><canvas id="editorCanvas"></canvas></div>
+          <label>角色名称<input id="editName" type="text" /></label>
+          <label>阵营<select id="editTeam"><option value="townsfolk">镇民</option><option value="outsider">外来者</option><option value="minion">爪牙</option><option value="demon">恶魔</option><option value="traveler">旅行者</option><option value="fabled">传奇角色</option><option value="other">其他</option></select></label>
+          <label>图像地址<input id="editImage" type="url" placeholder="https://…" /></label>
+          <label class="file-chip full">用本地图片替换<input id="editImageFile" type="file" accept="image/*" hidden /></label>
+          <button class="primary-button full" id="downloadOneBtn" type="button">下载这枚 Token</button>
+        </aside>
+      </div>
+
+      <div class="toast" id="toast" role="status"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

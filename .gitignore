@@ -76,3 +76,11 @@ Desktop.ini
 # 用户配置
 # =========================
 appsettings.Development.json
+
+# =========================
+# Web / Vite
+# =========================
+node_modules/
+dist/
+.wrangler/
+*.log

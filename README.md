@@ -15,6 +15,50 @@
 
 ---
 
+## 🌐 Web 版（推荐）
+
+仓库根目录现已包含一个纯浏览器版 Token 工坊。JSON 只在浏览器本地解析；角色图片由同源代理读取，以避开第三方图床的 CORS 限制。
+
+### 功能
+
+- 拖放或多选多个剧本 JSON，自动跳过 `_meta` 并合并去重
+- 同时支持英文 `team` 与中文 `sch_team`
+- 实时调整尺寸、DPI、留白、角色图缩放/位置、背景、字体、直线/弧形文字和裁切线
+- 单独修改角色名称、阵营和图片
+- 单张 PNG 下载或整套 ZIP 下载
+- 自定义本地字体和背景图；文件不会上传到服务器
+- 桌面端与手机端响应式界面
+
+### 本地运行
+
+```bash
+npm install
+npm run dev
+```
+
+生产构建：
+
+```bash
+npm run build
+```
+
+构建产物位于 `dist/`。本地 Vite 服务和 Cloudflare Pages 均提供 `/api/image` 图片代理；代理只接受公网 HTTP(S) 图片、校验图片类型，并限制为 12 MB。
+
+### 部署到 Cloudflare Pages
+
+把仓库连接到 Cloudflare Pages，并使用以下设置：
+
+| 设置 | 值 |
+| --- | --- |
+| Framework preset | Vite |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Root directory | `/` |
+
+`functions/api/image.js` 会被 Pages 自动识别为 Function，不需要额外配置 Worker。仓库中的 `wrangler.toml` 也可用于 Wrangler 部署。
+
+---
+
 ## 🌟 English
 
 ### 📖 Overview
